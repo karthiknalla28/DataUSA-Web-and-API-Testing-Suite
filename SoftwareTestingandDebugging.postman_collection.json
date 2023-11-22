@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "d401206d-3d39-4f6c-9118-f24f0f6a3d08",
+		"name": "SoftwareTestingandDebugging",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31244420"
+	},
+	"item": [
+		{
+			"name": "Test3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test to check if the status code of the response is 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Test to check if the 'Slug Nation' field in each item matches a specific regex pattern\r",
+							"pm.test(\"Slug Nation format is correct\", function() {\r",
+							"    let data = pm.response.json().data;\r",
+							"    data.forEach((item) => {\r",
+							"        pm.expect(item[\"Slug Nation\"]).to.match(/^[a-z]+(-[a-z]+)*$/);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"// Test to verify that the population increases with each year\r",
+							"pm.test(\"Population increases each year\", function() {\r",
+							"    let data = pm.response.json().data;\r",
+							"    for (let i = 0; i < data.length - 1; i++) {\r",
+							"        pm.expect(data[i].Population).to.be.above(data[i + 1].Population);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// Test to ensure 'ID Nation' and 'Nation' fields are consistent across all data items\r",
+							"pm.test(\"ID Nation and Nation are consistent\", function() {\r",
+							"    let data = pm.response.json().data;\r",
+							"    data.forEach((item) => {\r",
+							"        pm.expect(item[\"ID Nation\"]).to.equal(\"01000US\");\r",
+							"        pm.expect(item.Nation).to.equal(\"United States\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Population for the year 2017 is correct\", function() {\r",
+							"    let data = pm.response.json().data;\r",
+							"    let year2017Data = data.find(item => item[\"Year\"] === \"2017\");\r",
+							"    pm.expect(year2017Data).to.not.be.undefined;\r",
+							"    pm.expect(year2017Data.Population).to.equal(321004407); // Replace with the expected population value\r",
+							"});\r",
+							"\r",
+							"// Test to check if the population for the year 2017 is correct (based on expected value)\r",
+							"pm.test(\"Each ID Year value is unique\", function() {\r",
+							"    let data = pm.response.json().data;\r",
+							"    let idYears = data.map(item => item[\"ID Year\"]);\r",
+							"    let uniqueIdYears = new Set(idYears);\r",
+							"    pm.expect(uniqueIdYears.size).to.equal(idYears.length);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://datausa.io/api/data?drilldowns=Nation&measures=Population",
+					"protocol": "https",
+					"host": [
+						"datausa",
+						"io"
+					],
+					"path": [
+						"api",
+						"data"
+					],
+					"query": [
+						{
+							"key": "drilldowns",
+							"value": "Nation"
+						},
+						{
+							"key": "measures",
+							"value": "Population"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

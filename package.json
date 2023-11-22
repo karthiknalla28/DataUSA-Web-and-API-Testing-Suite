@@ -1,0 +1,17 @@
+{
+  "name": "desktop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "edge-paths": "^3.0.5",
+    "puppeteer": "^21.5.2",
+    "puppeteer-core": "^21.5.2",
+    "puppeteer-edge": "^0.12.4"
+  }
+}
